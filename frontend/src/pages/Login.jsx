@@ -6,54 +6,60 @@ import { toast } from 'react-toastify';
 const Login = () => {
 
   const [currentState , setCurrentState] = useState('Login');
-//   const {token, setToken  , navigate, backendUrl}  = useContext(ShopContext)
-    const { navigate}  = useContext(ShopContext)
+  const {token, setToken  , navigate, backendUrl, user , setUser}  = useContext(ShopContext);
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
 
   const onSubmitHandler = async (event)=>{
-    // event.preventDefault();
-    // try{
-    //   if(currentState === 'Sign Up'){
+    event.preventDefault();
+    try{
+      if(currentState === 'Sign Up'){
         
-    //       const response = await axios.post(backendUrl+'/yogi/v1/user/register', {name,email,password});
+          const response = await axios.post(backendUrl+'/yogi/v1/user/register', {name,email,password});
 
-    //       if(response.data.success){
-    //         setToken(response.data.token);
-    //         localStorage.setItem('token',response.data.token)
-    //       }
-    //       else{
-    //         toast.error(response.data.message);
-    //       }
-    //   }
-    //   else{
+          if(response.data.success){
+            setToken(response.data.token);
+            localStorage.setItem('token',response.data.token)
+            setUser(response.data.name);
+            localStorage.setItem('user',response.data.name);
+            
+          }
+          else{
+            toast.error(response.data.message);
+          }
+      }
+      else{
 
-    //     const response = await axios.post(backendUrl+'/yogi/v1/user/login', {email,password});
+        const response = await axios.post(backendUrl+'/yogi/v1/user/login', {email,password});
 
-    //     if(response.data.success){
-    //       setToken(response.data.token);
-    //       localStorage.setItem('token',response.data.token)
-    //     }
-    //     else{
-    //       toast.error(response.data.message)
-    //     }
+        if(response.data.success){
+          setToken(response.data.token);
+          localStorage.setItem('token',response.data.token);
+            setUser(response.data.name);
+            localStorage.setItem('user',response.data.name);
+            console.log("Logged in user:", response.data.name);
 
-    //   }
-    // }
-    // catch(error){
-    //   console.log(error);
-    //   toast.error(error.message);
-    // }
+        }
+        else{
+          toast.error(response.data.message)
+        }
+
+      }
+    }
+    catch(error){
+      console.log(error);
+      toast.error(error.message);
+    }
   }
 
 
-//   useEffect(()=>{
-//     if(token){
-//       navigate('/')
-//     }
-//   },[token])
+  useEffect(()=>{
+    if(token){
+      navigate('/dashboard');
+    }
+  },[token])
 
     
 
