@@ -9,11 +9,11 @@ export const ShopContext = createContext();
 const ShopContextProvider = (props) =>{
 
 
-    // const backendUrl  = import.meta.env.VITE_BACKEND_URL;
+    const backendUrl  = import.meta.env.VITE_BACKEND_URL;
     const [token , setToken] = useState('');
     const [user, setUser] = useState('');
     const navigate = useNavigate();
-    const backendUrl = "http://localhost:4000";
+    // const backendUrl = "http://localhost:4000";
 
      useEffect(()=>{
         if(!token && localStorage.getItem('token')){

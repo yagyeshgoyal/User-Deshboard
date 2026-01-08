@@ -8,6 +8,8 @@ const Login = () => {
   const { token, setToken, navigate, backendUrl, setUser } =
     useContext(ShopContext);
 
+  console.log(backendUrl);
+
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");

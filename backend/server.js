@@ -1,37 +1,51 @@
-// import express from 'express'
-const express = require('express');
-// import cors from 'cors'
-const cors = require('cors');
-// import 'dotenv/config'
+const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 
-
 const app = express();
-const PORT = process.env.PORT || 4000
+const PORT = process.env.PORT || 4000;
 
-
-// middleware 
+// middleware
 app.use(express.json());
-app.use(cors());
 
-// db connec karna h
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      // allow requests with no origin (Postman, curl)
+      if (!origin) return callback(null, true);
+
+      const allowedOrigins = [
+        "http://localhost:5173",
+        // "https://your-frontend-url.onrender.com"
+      ];
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
+// DB
 const db = require("./config/database");
 db.connect();
 
+// test route
+app.get("/", (req, res) => {
+  res.send("API Working 🚀");
+});
 
-
-// api
-app.get('/', (req,res)=>{
-    res.send("API Working");
-})
-
-
-const userRoute = require("./routers/userRoute")
-app.use("/yogi/v1/user",userRoute);
-
+// routes
+const userRoute = require("./routers/userRoute");
+app.use("/yogi/v1/user", userRoute);
 
 const noteRoutes = require("./routers/noteRoute");
 app.use("/yogi/v1/notes", noteRoutes);
 
-
-app.listen(PORT, ()=>{console.log(`Server started on port no. ${PORT}`)})
+// server
+app.listen(PORT, () => {
+  console.log(`Server started on port ${PORT}`);
+});
