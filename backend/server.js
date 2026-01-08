@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 4000;
 // middleware
 app.use(express.json());
 
-
+app.use(cors());
 
 // DB
 const db = require("./config/database");
@@ -16,7 +16,7 @@ db.connect();
 
 // test route
 app.get("/", (req, res) => {
-  res.send("API Working 🚀");
+  res.send("API Working ");
 });
 
 // routes
