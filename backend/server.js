@@ -30,4 +30,8 @@ const userRoute = require("./routers/userRoute")
 app.use("/yogi/v1/user",userRoute);
 
 
+const noteRoutes = require("./routers/noteRoute");
+app.use("/yogi/v1/notes", noteRoutes);
+
+
 app.listen(PORT, ()=>{console.log(`Server started on port no. ${PORT}`)})
